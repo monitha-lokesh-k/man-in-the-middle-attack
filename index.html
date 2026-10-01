@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive Man-in-the-Middle Attack demonstration for VTU Cryptography and Network Security">
+  <title>Man-in-the-Middle Attack | CNS VTU Project</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="navbar">
+  <a class="brand" href="#home">
+    <span class="brand-icon">🛡️</span>
+    <span><strong>MITM Attack</strong><small>Cryptography &amp; Network Security</small></span>
+  </a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#simulation">Simulation</a>
+    <a href="#dh">Diffie-Hellman</a>
+    <a href="#prevention">Prevention</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<main>
+<section id="home" class="hero">
+  <div>
+    <span class="eyebrow">VTU • CRYPTOGRAPHY &amp; NETWORK SECURITY</span>
+    <h1>Man-in-the-<span>Middle Attack</span></h1>
+    <p class="hero-text">
+      An interactive educational demonstration showing how an attacker can
+      intercept communication between two parties and why authentication is
+      essential for secure key exchange.
+    </p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#simulation">Start Simulation</a>
+      <a class="btn secondary" href="#prevention">Learn Prevention</a>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <div class="network-visual">
+      <div class="node"><b>👩</b><span>Alice</span></div>
+      <div class="link">↔</div>
+      <div class="node attacker"><b>🕵️</b><span>Mallory</span></div>
+      <div class="link">↔</div>
+      <div class="node"><b>👨</b><span>Bob</span></div>
+    </div>
+    <p class="muted">Mallory intercepts and relays communication between Alice and Bob.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <span class="eyebrow">CONCEPT</span>
+    <h2>What is a Man-in-the-Middle Attack?</h2>
+    <p>
+      A MITM attack occurs when an attacker positions themselves between two
+      communicating parties and can observe, relay, or modify traffic.
+      The key security weakness demonstrated here is lack of authentication.
+    </p>
+  </div>
+  <div class="feature-grid">
+    <article class="feature-card">
+      <div class="feature-icon">📡</div>
+      <h3>Interception</h3>
+      <p>The attacker gets between two parties and relays their communication.</p>
+    </article>
+    <article class="feature-card">
+      <div class="feature-icon">🔑</div>
+      <h3>Key Exchange Risk</h3>
+      <p>Unauthenticated key exchange can allow an attacker to establish separate keys with both parties.</p>
+    </article>
+    <article class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Authentication</h3>
+      <p>Certificates, digital signatures and authenticated key exchange help prevent impersonation.</p>
+    </article>
+  </div>
+</section>
+
+<section id="simulation" class="section simulation-section">
+  <div class="section-heading">
+    <span class="eyebrow">INTERACTIVE DEMO</span>
+    <h2>MITM Communication Simulator</h2>
+    <p>Run a simplified educational scenario with Alice, Mallory and Bob.</p>
+  </div>
+
+  <div class="controls panel">
+    <div>
+      <label for="message">Message from Alice</label>
+      <input id="message" value="MEET AT 10 AM" maxlength="80">
+    </div>
+    <div>
+      <label for="attackMode">Scenario</label>
+      <select id="attackMode">
+        <option value="attack">MITM attack enabled</option>
+        <option value="secure">Authenticated communication</option>
+      </select>
+    </div>
+    <button id="runSimulation" class="btn primary">Run Simulation</button>
+    <button id="resetSimulation" class="btn secondary">Reset</button>
+  </div>
+
+  <div class="network-panel panel">
+    <div class="party">
+      <div class="avatar">👩</div>
+      <h3>Alice</h3>
+      <span>Sender</span>
+    </div>
+
+    <div class="communication">
+      <div class="channel">
+        <div id="packetAB" class="packet">Message</div>
+        <span>Alice → Mallory</span>
+      </div>
+      <div id="attackBox" class="attacker-box">
+        <div class="avatar">🕵️</div>
+        <h3>Mallory</h3>
+        <span>Attacker</span>
+        <p id="attackerStatus">Waiting...</p>
+      </div>
+      <div class="channel">
+        <div id="packetBB" class="packet">Message</div>
+        <span>Mallory → Bob</span>
+      </div>
+    </div>
+
+    <div class="party">
+      <div class="avatar">👨</div>
+      <h3>Bob</h3>
+      <span>Receiver</span>
+    </div>
+  </div>
+
+  <div class="results-grid">
+    <div class="panel result-card">
+      <span>Original message</span>
+      <strong id="originalResult">—</strong>
+    </div>
+    <div class="panel result-card">
+      <span>Observed by Mallory</span>
+      <strong id="observedResult">—</strong>
+    </div>
+    <div class="panel result-card">
+      <span>Message received by Bob</span>
+      <strong id="receivedResult">—</strong>
+    </div>
+    <div class="panel result-card">
+      <span>Security result</span>
+      <strong id="securityResult">—</strong>
+    </div>
+  </div>
+
+  <div class="panel steps-panel">
+    <h3>Simulation Steps</h3>
+    <div id="simulationSteps" class="empty">Click “Run Simulation” to begin.</div>
+  </div>
+</section>
+
+<section id="dh" class="section">
+  <div class="section-heading">
+    <span class="eyebrow">KEY EXCHANGE</span>
+    <h2>Simplified Diffie-Hellman MITM Demonstration</h2>
+    <p>
+      This visualization demonstrates the core idea: without authentication,
+      Alice and Bob can unknowingly establish different shared secrets with Mallory.
+    </p>
+  </div>
+
+  <div class="dh-grid">
+    <div class="panel dh-card">
+      <h3>1. Public parameters</h3>
+      <p>Prime <strong>p</strong> and generator <strong>g</strong> are public.</p>
+      <div class="formula"><span>p =</span><strong id="pValue">23</strong><span>g =</span><strong id="gValue">5</strong></div>
+      <button id="runDH" class="btn primary full">Run Key Exchange</button>
+    </div>
+
+    <div class="panel dh-card">
+      <h3>2. Alice</h3>
+      <p>Creates a private value and sends a public value.</p>
+      <div class="value-row"><span>Private a</span><strong id="alicePrivate">—</strong></div>
+      <div class="value-row"><span>Public A</span><strong id="alicePublic">—</strong></div>
+    </div>
+
+    <div class="panel dh-card">
+      <h3>3. Mallory</h3>
+      <p>Interposes herself and establishes separate secrets.</p>
+      <div class="value-row"><span>Public M₁</span><strong id="malloryPublic1">—</strong></div>
+      <div class="value-row"><span>Public M₂</span><strong id="malloryPublic2">—</strong></div>
+      <div class="value-row"><span>Secret with Alice</span><strong id="mallorySecretA">—</strong></div>
+      <div class="value-row"><span>Secret with Bob</span><strong id="mallorySecretB">—</strong></div>
+    </div>
+
+    <div class="panel dh-card">
+      <h3>4. Bob</h3>
+      <p>Believes he is communicating directly with Alice.</p>
+      <div class="value-row"><span>Private b</span><strong id="bobPrivate">—</strong></div>
+      <div class="value-row"><span>Public B</span><strong id="bobPublic">—</strong></div>
+      <div class="value-row"><span>Bob's secret</span><strong id="bobSecret">—</strong></div>
+    </div>
+  </div>
+
+  <div class="panel warning-box">
+    <strong>Key idea:</strong>
+    In unauthenticated Diffie-Hellman, the mathematical exchange alone does not prove
+    who sent a public value. Authentication is needed to prevent substitution by an attacker.
+  </div>
+</section>
+
+<section id="prevention" class="section prevention">
+  <div class="section-heading">
+    <span class="eyebrow">DEFENSE</span>
+    <h2>How to Prevent MITM Attacks</h2>
+    <p>Security controls should provide both confidentiality and authentication.</p>
+  </div>
+  <div class="prevention-grid">
+    <article class="prevention-card"><b>🔐 TLS/HTTPS</b><p>Use authenticated TLS connections and validate certificates.</p></article>
+    <article class="prevention-card"><b>📜 Digital Certificates</b><p>Certificates bind identities to public keys through trusted authorities.</p></article>
+    <article class="prevention-card"><b>✍️ Digital Signatures</b><p>Signatures can authenticate messages and detect unauthorized modification.</p></article>
+    <article class="prevention-card"><b>🔑 Authenticated Key Exchange</b><p>Use protocols that authenticate the parties during key establishment.</p></article>
+    <article class="prevention-card"><b>🛜 Secure Networks</b><p>Avoid untrusted networks and use secure Wi-Fi configurations.</p></article>
+    <article class="prevention-card"><b>⚠️ Certificate Warnings</b><p>Do not ignore browser or application warnings about invalid certificates.</p></article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <span class="eyebrow">ATTACK FLOW</span>
+    <h2>MITM Attack Lifecycle</h2>
+  </div>
+  <div class="timeline">
+    <div><b>01</b><h3>Position</h3><p>Attacker gets between two communicating parties.</p></div>
+    <div><b>02</b><h3>Intercept</h3><p>Traffic is captured and relayed through the attacker.</p></div>
+    <div><b>03</b><h3>Observe or Modify</h3><p>The attacker may read or alter traffic depending on the protocol and protections.</p></div>
+    <div><b>04</b><h3>Detect / Prevent</h3><p>Authentication, integrity checks and secure protocols stop or expose the attack.</p></div>
+  </div>
+</section>
+
+<section class="history">
+  <div class="section-heading">
+    <span class="eyebrow light">ACADEMIC NOTE</span>
+    <h2>Confidentiality Is Not Enough</h2>
+    <p>
+      Encryption can protect the contents of a message from passive observers,
+      but an endpoint still needs assurance about who it is communicating with.
+      MITM attacks demonstrate why confidentiality, integrity and authentication
+      must be considered together.
+    </p>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <div class="section-heading">
+    <span class="eyebrow">PROJECT</span>
+    <h2>About This Project</h2>
+    <p>Interactive web demonstration for a VTU Cryptography &amp; Network Security project.</p>
+  </div>
+  <div class="details-grid">
+    <div><span>Subject</span><strong>Cryptography &amp; Network Security</strong></div>
+    <div><span>Topic</span><strong>Man-in-the-Middle Attack</strong></div>
+    <div><span>Technology</span><strong>HTML • CSS • JavaScript</strong></div>
+    <div><span>Deployment</span><strong>GitHub Pages</strong></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <strong>🛡️ Man-in-the-Middle Attack</strong>
+  <span>VTU Cryptography &amp; Network Security Project</span>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
