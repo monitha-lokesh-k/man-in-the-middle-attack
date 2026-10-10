@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive Man-in-the-Middle attack on Diffie-Hellman key exchange for Cryptography and Network Security (VTU BCS703).">
+  <title>Man-in-the-Middle Attack | CNS VTU Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="#home">🕵️ <strong>Man-in-the-Middle Attack</strong> <span>Cryptography &amp; Network Security</span></a>
+    <nav aria-label="Main">
+      <a href="#home">Home</a>
+      <a href="#introduction">Introduction</a>
+      <a href="#keyexchange">Block Diagram</a>
+      <a href="#message">Message</a>
+      <a href="#prevention">Prevention</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="hero-text">
+        <p class="course">VTU &bull; BCS703 &bull; Cryptography &amp; Network Security</p>
+        <h1>Man-in-the-Middle Attack</h1>
+        <p class="lead">
+          An attacker secretly intercepts messages between parties who believe they are
+          communicating with each other. Step through the attack on a Diffie-Hellman key
+          exchange between Sender A and Receiver B, with Attacker D in the middle.
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="#keyexchange">Start the attack</a>
+          <a class="btn" href="#prevention">How to prevent it</a>
+        </div>
+      </div>
+
+      <figure class="hero-figure">
+        <svg viewBox="0 0 640 280" role="img" aria-labelledby="heroDesc">
+          <title id="heroDesc">Sender A and Receiver B believe they talk directly, but Attacker D sits between them</title>
+          <path d="M120 70 H520" class="line believed"/>
+          <text x="320" y="55" text-anchor="middle" class="note">What A and B believe</text>
+          <path d="M120 70 L320 210" class="line real flow"/>
+          <path d="M320 210 L520 70" class="line real flow"/>
+          <text x="320" y="264" text-anchor="middle" class="note evil">What really happens</text>
+          <g class="node alice"><circle cx="90" cy="70" r="38"/><text x="90" y="75" text-anchor="middle">Sender A</text></g>
+          <g class="node bob"><circle cx="550" cy="70" r="38"/><text x="550" y="75" text-anchor="middle">Receiver B</text></g>
+          <g class="node mallory"><circle cx="320" cy="210" r="40"/><text x="320" y="215" text-anchor="middle">Attacker D</text></g>
+        </svg>
+      </figure>
+    </section>
+
+    <!-- INTRODUCTION -->
+    <section class="section" id="introduction">
+      <h2>Man in the Middle Attack</h2>
+      <p class="section-sub">
+        The attacker can secretly intercept messages between 2 or more parties who believe
+        they are communicating with each other. Eavesdropping and traffic padding are examples.
+      </p>
+
+      <div class="grid two">
+        <article class="card">
+          <h3>👂 Eavesdropping</h3>
+          <p>The attacker listens to the messages passing between the parties without their knowledge.</p>
+        </article>
+        <article class="card">
+          <h3>📦 Traffic padding</h3>
+          <p>Listed in the notes as an example of this class of attack on communication between the parties.</p>
+        </article>
+      </div>
+
+      <h3 class="sub-head">Who is who</h3>
+      <div class="grid three">
+        <article class="card party-card alice">
+          <h3>Sender A</h3>
+          <p>Private key <code>A</code><br>Public key <code>A<sub>1</sub></code></p>
+        </article>
+        <article class="card party-card mallory">
+          <h3>Attacker D</h3>
+          <p>Private keys <code>D<sub>1</sub></code>, <code>D<sub>2</sub></code><br>Public keys <code>D<sub>3</sub></code>, <code>D<sub>4</sub></code></p>
+        </article>
+        <article class="card party-card bob">
+          <h3>Receiver B</h3>
+          <p>Private key <code>B</code><br>Public key <code>B<sub>1</sub></code></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- BLOCK DIAGRAM + KEY EXCHANGE -->
+    <section class="section" id="keyexchange">
+      <h2>Block Diagram of the Attack</h2>
+      <p class="section-sub">
+        Sender A and Receiver B wish to exchange keys, and Attacker D is the adversary.
+        Enter the public values, then press <strong>Next</strong> to follow the 7 steps.
+        The diagram fills in as each step happens.
+      </p>
+
+      <div class="panel">
+        <div class="form-grid">
+          <label>Prime <code>q</code>
+            <input id="inQ" type="number" value="23" min="5" step="1" inputmode="numeric">
+          </label>
+          <label>Generator <code>g</code>
+            <input id="inG" type="number" value="5" min="2" step="1" inputmode="numeric">
+          </label>
+          <label>Sender's private key <code>A</code>
+            <input id="inA" type="number" value="6" min="2" step="1" inputmode="numeric">
+          </label>
+          <label>Receiver's private key <code>B</code>
+            <input id="inB" type="number" value="15" min="2" step="1" inputmode="numeric">
+          </label>
+          <label>Attacker's private key <code>D<sub>1</sub></code>
+            <input id="inD1" type="number" value="13" min="2" step="1" inputmode="numeric">
+          </label>
+          <label>Attacker's private key <code>D<sub>2</sub></code>
+            <input id="inD2" type="number" value="9" min="2" step="1" inputmode="numeric">
+          </label>
+        </div>
+        <p class="hint">All public keys are computed as <code>g<sup>private</sup> mod q</code>. The notes work mod q, and g is the generator agreed publicly.</p>
+        <p id="kxError" class="error" role="alert" hidden></p>
+      </div>
+
+      <div class="diagram-wrap" id="diagramWrap" tabindex="0" aria-label="Block diagram of the man-in-the-middle attack">
+        <div id="diagram"></div>
+      </div>
+
+      <div class="stepper">
+        <p class="step-now" id="stepNow" aria-live="polite">Step 0 of 7. Press Next to begin.</p>
+        <div class="actions">
+          <button class="btn" id="btnPrev" type="button">Previous</button>
+          <button class="btn primary" id="btnNext" type="button">Next step</button>
+          <button class="btn" id="btnPlay" type="button">Play</button>
+          <button class="btn" id="btnAll" type="button">Show all</button>
+          <button class="btn" id="btnReset" type="button">Reset</button>
+        </div>
+      </div>
+
+      <h3 class="sub-head">The attack, step by step</h3>
+      <ol id="stepList" class="attack-steps"></ol>
+
+      <div id="afterNote" class="verdict broken" hidden></div>
+    </section>
+
+    <!-- MESSAGE -->
+    <section class="section" id="message">
+      <h2>Communication After the Attack</h2>
+      <p class="section-sub">
+        At this point, A and B think they share a secret key, but A shares K<sub>2</sub> with D and
+        B shares K<sub>1</sub> with D. All future communication between A and B goes through D as
+        shown below. Keys come from the values entered above. Encryption <code>E</code> here is a
+        simple Caesar shift taken from the key, which stands in for a real cipher such as AES.
+      </p>
+
+      <div class="panel">
+        <div class="form-grid wide">
+          <label>Message M from Sender A
+            <input id="msg" type="text" value="Transfer 500 rupees to account 4421" maxlength="120">
+          </label>
+          <label>Attacker's message N
+            <input id="tamper" type="text" value="Transfer 500 rupees to account 9999" maxlength="120">
+          </label>
+        </div>
+
+        <fieldset class="choice">
+          <legend>What does Attacker D send to Receiver B in Step 3?</legend>
+          <label class="radio"><input type="radio" name="mode" value="eavesdrop"> <span><code>E(K<sub>1</sub>, M)</code> Attacker just eavesdrops on the communication</span></label>
+          <label class="radio"><input type="radio" name="mode" value="modify" checked> <span><code>E(K<sub>1</sub>, N)</code> Attacker modifies the message</span></label>
+        </fieldset>
+
+        <div class="actions">
+          <button class="btn primary" id="runMsg" type="button">Send message</button>
+          <button class="btn" id="resetMsg" type="button">Clear</button>
+        </div>
+        <p id="msgError" class="error" role="alert" hidden></p>
+      </div>
+
+      <div id="msgResult" class="result" hidden>
+        <div class="relay" id="relay"></div>
+        <div id="msgVerdict" class="verdict"></div>
+      </div>
+      <p id="msgEmpty" class="empty">Send a message to follow Steps 1 to 3.</p>
+    </section>
+
+    <!-- PREVENTION -->
+    <section class="section" id="prevention">
+      <h2>How This Vulnerability Is Prevented</h2>
+      <p class="section-sub">
+        The modified message sent by the attacker becomes the main mode of communication, which is
+        the wrong message. This vulnerability can be overcome by using digital signatures and
+        public-key certificates.
+      </p>
+
+      <div class="grid two">
+        <article class="card good">
+          <h3>🔏 Digital signatures</h3>
+          <p>Sender A signs the public key A<sub>1</sub> with her private signing key. Receiver B checks the signature before using it. Attacker D cannot produce a valid signature for D<sub>3</sub> in A's name.</p>
+        </article>
+        <article class="card good">
+          <h3>📜 Public-key certificates</h3>
+          <p>A trusted certificate authority signs a certificate that ties a public key to an identity. B accepts a key only if its certificate is valid, and D has no certificate that says D<sub>3</sub> belongs to A.</p>
+        </article>
+      </div>
+
+      <h3 class="sub-head">Why the attack fails with them</h3>
+      <ol class="attack-steps plain">
+        <li>Sender A sends A<sub>1</sub> together with her signature or certificate.</li>
+        <li>Attacker D replaces it with D<sub>3</sub>, but cannot sign D<sub>3</sub> as A.</li>
+        <li>Receiver B verifies the signature or certificate and the check fails.</li>
+        <li>B rejects D<sub>3</sub>, so no key K<sub>1</sub> is ever shared with the attacker. The same check protects B<sub>1</sub> on the way back to A.</li>
+      </ol>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <h2>About This Project</h2>
+      <p class="section-sub">Interactive implementation for a VTU Cryptography &amp; Network Security project.</p>
+      <dl class="about">
+        <div><dt>Subject</dt><dd>Cryptography &amp; Network Security (BCS703)</dd></div>
+        <div><dt>Topic</dt><dd>Man-in-the-Middle attack on Diffie-Hellman</dd></div>
+        <div><dt>Platform</dt><dd>GitHub Pages</dd></div>
+        <div><dt>Technology</dt><dd>HTML, CSS, JavaScript</dd></div>
+      </dl>
+      <p class="disclaimer">For learning only. The numbers are deliberately small and the message cipher is a simple shift, so nothing here is secure.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <strong>🕵️ Man-in-the-Middle Attack</strong>
+    <span>VTU Cryptography &amp; Network Security Project</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
