@@ -135,8 +135,8 @@ label.radio input { margin-top: 6px; accent-color: var(--evil); }
 label.radio code { color: var(--warn); }
 
 /* Block diagram */
-.diagram-wrap { margin-top: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; padding: 12px; }
-#diagram svg { display: block; width: 100%; min-width: 760px; height: auto; }
+.diagram-wrap { margin-top: 24px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; padding: 8px 12px; }
+#diagram svg { display: block; width: 100%; max-width: 680px; min-width: 560px; height: auto; margin: 0 auto; }
 
 .hdr rect { fill: var(--panel-2); stroke: var(--muted); stroke-width: 2; }
 .hdr text { fill: var(--text); font-family: var(--font-head); font-weight: 700; font-size: 17px; }
@@ -156,8 +156,8 @@ label.radio code { color: var(--warn); }
 .al { fill: var(--text); font-family: var(--font-body); font-size: 15px; }
 .red { fill: var(--evil); font-family: var(--font-body); font-style: italic; font-size: 16px; }
 
-.el { transition: opacity 0.4s; }
-.el.pending { opacity: 0.1; }
+.el { transition: opacity 0.4s, visibility 0.4s; }
+.el.pending { opacity: 0; visibility: hidden; pointer-events: none; }
 .el.active .bx { stroke: var(--warn); stroke-width: 3.5; }
 .el.active .ar { stroke: var(--warn); stroke-width: 4.5; }
 .el.active .ah { fill: var(--warn); }
